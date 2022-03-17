@@ -1,0 +1,122 @@
+apiVersion: apps/v1    # Deployment for the python application
+kind: Deployment
+metadata:
+  labels:
+    app: webapp1
+  name: webapp1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+       app: webapp1
+  template:
+    metadata:
+       labels:
+          app: webapp1
+    spec:
+      containers:
+      - image: pyapp
+        name: cont-webapp
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 5000 #containerports
+
+
+---
+apiVersion: v1     #Service for python application
+kind: Service
+metadata:
+  labels:
+    app: webapp1
+  name: webapp1
+spec:
+  ports:
+  - port: 5000
+    targetPort: 5000
+  selector:
+    app: webapp1
+---
+apiVersion: apps/v1       #Deployment for Prometheus
+kind: Deployment
+metadata:
+  labels:
+    app: prometheus
+  name: prometheus
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+       app: prometheus
+
+  template:
+    metadata:
+      labels:
+        app: prometheus
+    spec:
+      containers:
+      - args:
+        image: prom/prometheus
+        name: prometheus
+        ports:
+        - containerPort: 9090
+---
+
+apiVersion: v1        #Service for prometheus
+kind: Service
+metadata:
+  labels:
+     app: prometheus
+  name: prometheus
+spec:
+  ports:
+  - port: 9090
+    targetPort: 9090
+  selector:
+    app: prometheus
+
+---
+
+apiVersion: apps/v1        #Deployment for Grafana
+kind: Deployment
+metadata:
+  labels:
+     app: grafana
+  name: grafana
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+       app: grafana
+  template:
+    metadata:
+      labels:
+        app: grafana
+    spec:
+      containers:
+      - env:
+        - name: GF_SECURITY_ADMIN_PASSWORD
+          valueFrom:
+             secretKeyRef:
+                name: mysecret
+                key: password
+        - name: GF_USERS_ALLOW_SIGN_UP
+          value: "false"
+        image: grafana/grafana
+        name: grafana
+        ports:
+        - containerPort: 3000
+
+
+---
+apiVersion: v1         # Service for Grafana
+kind: Service
+metadata:
+  labels:
+    app: grafana
+  name: grafana
+spec:
+  ports:
+  - port: 3000
+    targetPort: 3000
+  selector:
+    app: grafana
