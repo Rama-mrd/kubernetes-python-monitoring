@@ -36,7 +36,8 @@ Example screenshots:
  ![image](https://user-images.githubusercontent.com/26178872/158742940-903b3365-b573-4824-b215-99b7541bd60c.png)
 
 
- 4.	Run the pytest to verify the outputs if you get them as expected.
+ 4.	Create test scripts and run them to verify the outputs if you get them as expected.
+ 
 Building Docker Containers
 1.	Build the Docker image
 
