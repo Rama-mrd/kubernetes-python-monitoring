@@ -85,7 +85,7 @@ b.	Service – Contains the service endpoints for python application, Prometheus
 To listen to the webapp . instead of local host, change the ip to the clusterip.
 
               kubectl exec -it prometheus-7fcc6cb64d-cf658 -n newdeploy -- /bin/sh
-              vi /etc/prometheus/prometheus.yaml
+              vi /etc/prometheus/prometheus.yml
 
 7.	Open the endpoints again (App endpoint : http://localhost:5000 , Prometheus endpoint : http://localhost:9090 ,Grafana endpoint : http://localhost:3000 ) to check if they are loading as expected.
 
