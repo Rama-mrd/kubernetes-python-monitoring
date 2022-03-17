@@ -81,11 +81,11 @@ b.	Service – Contains the service endpoints for python application, Prometheus
               kubectl port-forward service/prometheus -n newdeploy 5000:5000
               kubectl port-forward service/webapp1 -n newdeploy 9090:9090
 
-6.	Login to Prometheus pod and copy contents of prometheus/prometheus.yaml
+6.	Login to Prometheus pod and copy contents of prometheus/prometheus.yml
 To listen to the webapp . instead of local host, change the ip to the clusterip.
 
               kubectl exec -it prometheus-7fcc6cb64d-cf658 -n newdeploy -- /bin/sh
-              vi /etc/prometheus/prometheus.yml
+              vi /etc/prometheus/prometheus.yaml
 
 7.	Open the endpoints again (App endpoint : http://localhost:5000 , Prometheus endpoint : http://localhost:9090 ,Grafana endpoint : http://localhost:3000 ) to check if they are loading as expected.
 
